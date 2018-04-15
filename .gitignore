@@ -1,0 +1,9 @@
+
+examples/stm32/EWARM/Debug*
+examples/stm32/EWARM/Release*
+examples/stm32/EWARM/settings
+build*
+release*
+*.txt.user
+examples/mingw/sim300_example/example_config.h
+*.log
