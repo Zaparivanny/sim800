@@ -942,6 +942,7 @@ uint8_t simx_is_receive()
 
 void simx_wait_reply(sim_reply_t *reply)
 {
+    static uint8_t cnt_timeout = 0;
     sim300_context_t *context = _gsm_context();
     if(reply->status == SIM300_BUSY || reply != context->reply)
     {
@@ -954,11 +955,30 @@ void simx_wait_reply(sim_reply_t *reply)
         {
             context->is_receive = 1;
             context->reply->status = SIM300_TIMEOUT;
+            if(++cnt_timeout == 5)
+            {
+                cnt_timeout = 0;
+                simx_callback_reset_modem();
+            }
             break;
         }
         simx_callback_update();
     }
-    for(uint32_t i = 0; i < 500000; i++)
+    if(reply->status == SIM300_ERRFRAME)
+    {
+        for(uint32_t i = 0; i < 5000000; i++)
+        {
+            ___NOP;
+        }
+        simx_callback_update();
+    }
+    
+    if(reply->status != SIM300_TIMEOUT)
+    {
+        cnt_timeout = 0;
+    }
+    
+    for(uint32_t i = 0; i < 5000000; i++)
     {
         ___NOP;
     }

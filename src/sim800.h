@@ -270,6 +270,7 @@ void simx_callback_sms_received(uint16_t number);
 void simx_callback_message(simx_notification_t notification);
 void simx_callback_timeout(void);
 void simx_callback_update(void); // TODO DELETE
+void simx_callback_reset_modem(void);
 
 void simx_test(sim_reply_t *reply);
 void simx_pin_is_required(sim_reply_t *reply); // AT+CPIN?

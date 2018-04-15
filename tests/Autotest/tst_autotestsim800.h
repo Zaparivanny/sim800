@@ -22,6 +22,11 @@ void set_timeout()
     }
 }
 
+void simx_callback_reset_modem()
+{
+    
+}
+
 void simx_callback_sms_received(uint16_t number)
 {
     g_sms_number = number;
