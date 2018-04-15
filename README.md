@@ -1,13 +1,12 @@
-[![Build Status](https://travis-ci.org/Zaparivanny/sim900.svg?branch=develop)](https://travis-ci.org/Zaparivanny/sim900)
-[![Coverage Status](https://coveralls.io/repos/github/Zaparivanny/sim900/badge.svg)](https://coveralls.io/github/Zaparivanny/sim900)
+[![Build Status](https://travis-ci.org/Zaparivanny/sim800.svg?branch=master)](https://travis-ci.org/Zaparivanny/sim800)
 
-# sim900 library
+# sim800 library
 
 
 ## How to install this library
 
 ```sh
-git clone --recursive https://github.com/Zaparivanny/sim900.git
+git clone --recursive https://github.com/Zaparivanny/sim800.git
 
 ```
 
