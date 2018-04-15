@@ -322,7 +322,7 @@ void simx_tick_1ms(void)
     sim300_context_t *context = _gsm_context();
     if(context->is_receive == 0)
     {
-        if(++context->time_ms > SIM900_TIMEOUT)
+        if(++context->time_ms > SIMX_TIMEOUT)
         {
             context->reply->status = SIM300_TIMEOUT;
             context->is_receive = 1;
@@ -951,7 +951,7 @@ void simx_wait_reply(sim_reply_t *reply)
     
     while(context->is_receive == 0)
     {
-        if(context->time_ms > SIM900_TIMEOUT)
+        if(context->time_ms > SIMX_TIMEOUT)
         {
             context->is_receive = 1;
             context->reply->status = SIM300_TIMEOUT;
@@ -1397,7 +1397,7 @@ void _simx_current_connection_status_parse(sim300_context_t *context, char *buff
         }
     }
     
-    if(n1 == 7)
+    if(n1 == SIMX_MUX_SOCKETS)
     {
         context->is_receive = 1;
     }

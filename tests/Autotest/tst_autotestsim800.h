@@ -16,7 +16,7 @@ simx_notification_t g_notification;
 
 void set_timeout()
 {
-    for(int i = 0; i < SIM900_TIMEOUT + 1; i++)
+    for(int i = 0; i < SIMX_TIMEOUT + 1; i++)
     {
         simx_tick_1ms();
     }
@@ -348,8 +348,6 @@ TEST(AutoTestSim800, SIM_AT_CIPSTATUS)
     simx_test_send("C: 3,,\"\",\"\",\"\",\"INITIAL\"\r\n");
     simx_test_send("C: 4,,\"\",\"\",\"\",\"INITIAL\"\r\n");
     simx_test_send("C: 5,,\"\",\"\",\"\",\"INITIAL\"\r\n");
-    simx_test_send("C: 6,,\"\",\"\",\"\",\"INITIAL\"\r\n");
-    simx_test_send("C: 7,,\"\",\"\",\"\",\"INITIAL\"\r\n");
     
     
     EXPECT_EQ(cipstatus[0].n, 0);
@@ -358,7 +356,7 @@ TEST(AutoTestSim800, SIM_AT_CIPSTATUS)
     EXPECT_EQ(cipstatus[0].port, 123);
     EXPECT_EQ(cipstatus[0].state, CCP_CLOSED);
     
-    for(int i = 1; i < 7; i++)
+    for(int i = 1; i < SIMX_MUX_SOCKETS; i++)
     {
         EXPECT_EQ(cipstatus[i].n, i);
         EXPECT_EQ(cipstatus[i].state, CCP_INITIAL);
@@ -381,8 +379,6 @@ TEST(AutoTestSim800, SIM_AT_CIPSTATUS)
     simx_test_send("C: 3,,\"\",\"\",\"\",\"INITIAL\"\r\n");
     simx_test_send("C: 4,,\"\",\"\",\"\",\"INITIAL\"\r\n");
     simx_test_send("C: 5,,\"\",\"\",\"\",\"INITIAL\"\r\n");
-    simx_test_send("C: 6,,\"\",\"\",\"\",\"INITIAL\"\r\n");
-    simx_test_send("C: 7,,\"\",\"\",\"\",\"INITIAL\"\r\n");
     
     
     EXPECT_EQ(cipstatus[0].n, 0);
@@ -391,7 +387,7 @@ TEST(AutoTestSim800, SIM_AT_CIPSTATUS)
     EXPECT_EQ(cipstatus[0].port, 123);
     EXPECT_EQ(cipstatus[0].state, CCP_CONNECTED);
     
-    for(int i = 3; i < 7; i++)
+    for(int i = 3; i < SIMX_MUX_SOCKETS; i++)
     {
         EXPECT_EQ(cipstatus[i].n, i);
         EXPECT_EQ(cipstatus[i].state, CCP_INITIAL);
