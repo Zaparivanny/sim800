@@ -5,9 +5,9 @@
 
 #define SIM_RX_BUFFER 2048
 #define SIM_TX_BUFFER 2048
-#define SIMX_TIMEOUT 300000
+#define SIMX_TIMEOUT 30000
 
-#define SIMX_MUX_SOCKETS 5
+#define SIMX_MUX_SOCKETS 6
 
 //+CMTI: "SM",1 - Unsolicited notification of the SMS arriving 
 

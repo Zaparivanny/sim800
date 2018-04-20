@@ -696,7 +696,8 @@ void simx_rcv_sdframe(struct sim300_context_t *context, uint8_t *buffer, uint16_
         {
             if(buffer[0] == '>')
             {
-                for(uint32_t i = 0; i < 500000; i++)
+                buffer[0] = 0;
+                for(int i = 0; i < 100000; i++)
                 {
                     ___NOP;
                 }
@@ -728,8 +729,8 @@ void simx_rcv_sdframe(struct sim300_context_t *context, uint8_t *buffer, uint16_
             }
             else
             {
-                context->reply->status = SIM300_ERRFRAME;
-                simx_finished(context);
+                //context->reply->status = SIM300_ERRFRAME;
+                //simx_finished(context);
             }
         }
        
@@ -840,23 +841,26 @@ void simx_receive_frame(sim300_context_t *context, uint8_t *buffer, uint16_t len
                 tmpbuff = (char*)(buffer + 3);
                 n = buffer[0] - 0x30;
                 len -= 3;
+                if(n > SIMX_MUX_SOCKETS - 1)
+                {
+                    return;
+                }
             }
             
-            if(memcmp(tmpbuff, "CONNECT OK\r", len) == 0)
+            if(memcmp(tmpbuff, "CONNECT OK\r", len) == 0 && len != 0)
             {
                 simx_callback_tcp_msg(SIM_TCP_CONNECT_OK, n);
             }
             else if(memcmp(tmpbuff, "CLOSED\r", len) == 0 || 
-                    memcmp(tmpbuff, "CLOSE OK\r", len) == 0)
+                    memcmp(tmpbuff, "CLOSE OK\r", len) == 0 && len != 0)
             {
                 simx_callback_tcp_msg(SIM_TCP_CLOSED, n);
             }
-            else if(memcmp(tmpbuff, "ALREADY CONNECT\r", len) == 0)
+            else if(memcmp(tmpbuff, "ALREADY CONNECT\r", len) == 0 && len != 0)
             {
                 simx_callback_tcp_msg(SIM_TCP_ALREADY_CONNECT, n);
-                
             }
-            else if(memcmp(tmpbuff, "CONNECT FAIL\r", len) == 0)
+            else if(memcmp(tmpbuff, "CONNECT FAIL\r", len) == 0 && len != 0)
             {
                 simx_callback_tcp_msg(SIM_TCP_CONNECT_FAIL, n);
             }
@@ -978,10 +982,10 @@ void simx_wait_reply(sim_reply_t *reply)
         cnt_timeout = 0;
     }
     
-    for(uint32_t i = 0; i < 5000000; i++)
+    /*for(uint32_t i = 0; i < 5000000; i++)
     {
         ___NOP;
-    }
+    }*/
 }
 
 void _simx_context_send_at_init(sim300_context_t *context)
@@ -1397,7 +1401,7 @@ void _simx_current_connection_status_parse(sim300_context_t *context, char *buff
         }
     }
     
-    if(n1 == SIMX_MUX_SOCKETS)
+    if(n1 == SIMX_MUX_SOCKETS - 1)
     {
         context->is_receive = 1;
     }
